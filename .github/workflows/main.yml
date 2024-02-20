@@ -1,0 +1,29 @@
+name: Create GitHub Package
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Create package directory
+      run: mkdir -p package
+
+    - name: Copy HTML file to package directory
+      run: cp index.html package/
+
+    - name: Archive package
+      run: tar czf hello-world-html.tar.gz package/*
+
+    - name: Publish package
+      uses: actions/upload-artifact@v2
+      with:
+        name: hello-world-html
+        path: hello-world-html.tar.gz
